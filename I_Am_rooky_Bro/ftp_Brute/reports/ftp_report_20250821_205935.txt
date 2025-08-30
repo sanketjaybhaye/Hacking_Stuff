@@ -1,0 +1,10 @@
+==== FTP Brute-Force Report ====
+Target Host: 127.0.0.1
+Port: 21
+Start Time: 2025-08-21 20:58:42.593366
+End Time: 2025-08-21 20:59:35.487320
+Duration: 0:00:52.893954
+Total Attempts: 91
+Threads Used: 8
+Safe Attempt Limit: 1000
+Success Credentials: sanket:spongebob

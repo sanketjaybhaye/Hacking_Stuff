@@ -1,0 +1,10 @@
+==== FTP Brute-Force Report ====
+Target Host: 127.0.0.1
+Port: 21
+Start Time: 2025-08-21 21:39:52.788753
+End Time: 2025-08-21 21:42:41.557310
+Duration: 0:02:48.768557
+Total Attempts: 375
+Threads Used: 8
+Safe Attempt Limit: 1000
+Success Credentials: None

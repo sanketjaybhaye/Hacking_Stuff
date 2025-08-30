@@ -1,0 +1,31 @@
+DarkBit Wi-Fi Pentesting Toolkit v3.1
+Copyright (c) 2025 DarkBit
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Toolkit"), to deal
+in the Toolkit without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, and/or distribute copies of the Toolkit,
+subject to the following conditions:
+
+1. Ethical Use Only:
+   This Toolkit may only be used for:
+   - Educational purposes in controlled lab environments, OR
+   - Authorized penetration testing with prior **written consent**.
+   Any use of this Toolkit for unauthorized network access, criminal activity,
+   or malicious intent is strictly prohibited.
+
+2. Attribution:
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Toolkit.
+
+3. Disclaimer of Warranty:
+   THE TOOLKIT IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF, OR IN CONNECTION WITH THE TOOLKIT OR THE USE OR OTHER
+   DEALINGS IN THE TOOLKIT.
+
+By using this Toolkit, you acknowledge that you understand and agree to the
+Ethical Use conditions stated above.
