@@ -29,7 +29,6 @@ Basically: *If it’s even remotely useful (or funny), it lives here.*
 This repo is for educational purposes only.
 If you use this for anything shady and the feds show up 🚓… that’s on you, not me.
 
----
 
 ## 🧑‍💻 Contributing
 
@@ -37,7 +36,6 @@ Found something cool? Add it!
 Want to fix my messy notes? Please do 🙏
 Got memes? Even better.
 
----
 
 ## ⭐ Final Note
 
