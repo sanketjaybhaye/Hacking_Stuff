@@ -24,14 +24,14 @@ Basically: *If it’s even remotely useful (or funny), it lives here.*
    git clone https://github.com/sanketjaybhaye/Hacking_Stuff.git
 
 ---
-# ⚠️ Disclaimer
+## ⚠️ Disclaimer
 
 This repo is for educational purposes only.
 If you use this for anything shady and the feds show up 🚓… that’s on you, not me.
 
 ---
 
-# 🧑‍💻 Contributing
+## 🧑‍💻 Contributing
 
 Found something cool? Add it!
 Want to fix my messy notes? Please do 🙏
@@ -39,7 +39,7 @@ Got memes? Even better.
 
 ---
 
-# ⭐ Final Note
+## ⭐ Final Note
 
 This repo is a work in progress – forever.
 Like WiFi passwords, it just keeps changing.
