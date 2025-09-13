@@ -1,0 +1,15 @@
+[Unit]
+Description=OWASP Juice Shop (node/npm source)
+After=network.target
+
+[Service]
+Type=simple
+User=youruser
+WorkingDirectory=/home/youruser/juice-shop
+Environment=HOST=127.0.0.1 PORT=3000
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
