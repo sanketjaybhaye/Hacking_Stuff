@@ -14,7 +14,7 @@ Welcome to **Hacking_Stuff**! Think of it as my **digital backpack** 🎒 – yo
 
 ## 📂 Repository Structure
 
-The contents have been organized into three main areas:
+The contents are neatly organized into the following areas:
 
 - **[🗂️ Cheat_Sheets](./Cheat_Sheets/)**  
   A massive collection of professional cheat sheets for almost every security tool (Nmap, Metasploit, Gobuster, Sqlmap, John The Ripper, and many more).
@@ -24,6 +24,21 @@ The contents have been organized into three main areas:
   
 - **[📚 Book_Summaries](./Book_Summaries/)**  
   Notes and breakdowns of essential ethical hacking literature.
+
+- **[⚙️ Scripts](./Scripts/)** *(New)*  
+  Custom automation scripts to speed up your workflow.
+
+- **[📝 CTF_Writeups](./CTF_Writeups/)** *(New)*  
+  A structured place to store your HackTheBox, TryHackMe, and VulnHub walk-throughs and lessons learned.
+
+- **[✅ Checklists](./Checklists/)** *(New)*  
+  Step-by-step methodologies for things like Web App Pentesting, PrivEsc, and more.
+
+- **[🛠️ Configs](./Configs/)** *(New)*  
+  Your dotfiles and configuration templates (like `.tmux.conf`) ready to deploy on any new pentest VM.
+
+- **[👾 Vulnerable_Code](./Vulnerable_Code/)** *(New)*  
+  Snippets of intentionally vulnerable code (SQLi, XSS) to practice source code review and exploitation.
 
 ---
 
