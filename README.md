@@ -1,19 +1,29 @@
-# 🕶️ Hacking_Stuff  
+<div align="center">
+  <h1>🕶️ Hacking_Stuff</h1>
+  <p><b>My personal stash of hacker notes, cheat sheets, experiments, and guides.</b></p>
+  <img src="https://img.shields.io/badge/Security-Red_Team-red.svg" alt="Red Team" />
+  <img src="https://img.shields.io/badge/OSINT-Recon-blue.svg" alt="OSINT" />
+  <img src="https://img.shields.io/badge/Hacking-Notes-black.svg" alt="Notes" />
+</div>
 
-Welcome to **Hacking_Stuff** – my personal stash of hacker notes, cheat sheets, experiments, and random chaos that didn’t fit anywhere else.  
+<br>
 
-Think of it as my **digital backpack** 🎒 – you never know if you’ll pull out a WiFi hack, a random exploit, or just a badly written bash script at 3 AM.  
+Welcome to **Hacking_Stuff**! Think of it as my **digital backpack** 🎒 – you never know if you’ll pull out a Wi-Fi hack, a remote code exploit, or just a 3 AM bash script that somehow works.
 
 ---
 
-## 📂 What’s This Repo For?  
+## 📂 Repository Structure
 
-- 📚 Collecting cheat sheets, manuals, and guides  
-- 🛠️ Experimenting with scripts, payloads, configs  
-- 🧑‍🎓 Documenting my hacker learning journey  
-- 🎲 Random stuff that doesn’t deserve its own repo but still deserves a home  
+The contents have been organized into three main areas:
 
-Basically: *If it’s even remotely useful (or funny), it lives here.*  
+- **[🗂️ Cheat_Sheets](./Cheat_Sheets/)**  
+  A massive collection of professional cheat sheets for almost every security tool (Nmap, Metasploit, Gobuster, Sqlmap, John The Ripper, and many more).
+  
+- **[🧑‍💻 Beginner_Guides](./Beginner_Guides/)**  
+  Guides, walkthroughs, and notes ranging from basic anonymity to mobile vulnerabilities and Wi-Fi pentesting labs.
+  
+- **[📚 Book_Summaries](./Book_Summaries/)**  
+  Notes and breakdowns of essential ethical hacking literature.
 
 ---
 
@@ -22,26 +32,25 @@ Basically: *If it’s even remotely useful (or funny), it lives here.*
 1. Clone this repo:
    ```bash
    git clone https://github.com/sanketjaybhaye/Hacking_Stuff.git
+   ```
+2. Navigate to the section you're interested in and start learning! Every main folder has its own `README.md` detailing its specific contents.
 
 ---
+
 ## ⚠️ Disclaimer
 
-This repo is for educational purposes only.
-If you use this for anything shady and the feds show up 🚓… that’s on you, not me.
+This repository is strictly for **educational purposes and authorized testing only**.  
+If you use these scripts, exploits, or concepts for malicious activities, the consequences are entirely yours. Be ethical, stay legal. 🚓
 
+## 🤝 Contributing
 
-## 🧑‍💻 Contributing
-
-Found something cool? Add it!
-Want to fix my messy notes? Please do 🙏
-Got memes? Even better.
-
+- Found an awesome new tool or cheat sheet? Add it!
+- Noticed a typo in my notes? Please fix it 🙏.
+- Got an exploit script that needs a home? PRs are always welcome.
 
 ## ⭐ Final Note
 
-This repo is a work in progress – forever.
-Like WiFi passwords, it just keeps changing.
+This repo is a work in progress – forever.  
+Like Wi-Fi handshakes, it just keeps changing. 
 
-So grab your ☕, channel your inner hacker, and dive in.
-
----
+Grab your ☕, fire up your terminal, and dive in.
