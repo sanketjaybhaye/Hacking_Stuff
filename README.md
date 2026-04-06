@@ -34,7 +34,7 @@ Guides, walkthroughs, and notes ranging from basic anonymity to mobile vulnerabi
 - **Mobile_Hacking** — Android/iOS pentesting basics
 - **OS_Hacking** — Linux/Windows exploitation
 
-### 📚 [Book_Summaries](./Book_Summaries/)
+### 📚 [Library](./Library/)
 Notes and breakdowns of essential ethical hacking literature. Currently includes:
 - *Beginning Ethical Hacking with Kali Linux*
 - *Hacking Book Chapter Breakdown*
