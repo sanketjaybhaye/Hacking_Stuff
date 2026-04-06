@@ -10,10 +10,8 @@ Curated collection of essential ethical hacking, penetration testing, and cybers
 | [Hacking Book Chapter Breakdown](./Hacking%20Book%20Chapter%20Breakdown%20Request.pdf) | ~546 KB | PDF |
 
 ## 📥 How to Add Books
-
-1. Ensure the book is legally shareable (open-source, Creative Commons, or you have permission).
-2. Upload the PDF to this directory.
-3. Update this README with the book title and a brief description.
+1. Upload the PDF to this directory.
+2. Update this README with the book title and a brief description.
 
 ## 🎯 Recommended Additions
 
