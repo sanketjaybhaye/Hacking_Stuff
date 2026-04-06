@@ -21,16 +21,6 @@ Collection of TryHackMe room writeups, methodologies, and flag captures.
 | [Postman](#postman) | Medium | Redis/SSH | ✅ |
 | [Tom Ghost](#tom-ghost) | Easy | Java/Serialization | ✅ |
 | [Chocolate Factory](#chocolate-factory) | Medium | Steganography/Crypto | ✅ |
-| [Linux Fundamentals](#linux-fundamentals) | Beginner | System Administration | ✅ |
-| [Nmap](#nmap) | Beginner | Networking | ✅ |
-| [OWASP Top 10](#owasp-top-10) | Beginner | Web Security | ✅ |
-| [Basic Pentesting](#basic-pentesting) | Easy | Penetration Testing | ✅ |
-| [Kenobi](#kenobi) | Easy | Exploitation | ✅ |
-| [LazyAdmin](#lazyadmin) | Easy | Web/CMS | ✅ |
-| [Simple CTF](#simple-ctf) | Easy | Web/FTP | ✅ |
-| [Bounty Hacker](#bounty-hacker) | Medium | Linux/PrivEsc | ✅ |
-| [Agent Sudo](#agent-sudo) | Medium | Steganography/Crypto | ✅ |
-| [Pickler](#pickler) | Medium | Web/Deserialization | ✅ |
 
 ---
 
