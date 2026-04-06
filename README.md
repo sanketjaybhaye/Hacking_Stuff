@@ -105,6 +105,9 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ---
 
+### 📚 [Resources](./Resources/)
+Curated learning paths, top YouTube channels, bug bounty platforms, and essential blogs to keep you ahead of the curve.
+
 ## ⭐ Final Note
 
 This repo is a work in progress — forever.
